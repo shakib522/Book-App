@@ -5,7 +5,6 @@ import com.example.bookapp.auth.model.LoginRequest;
 import com.example.bookapp.auth.model.RegisterRequest;
 import com.example.bookapp.auth.service.AuthService;
 import com.example.bookapp.error.DefaultException;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +17,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(
-            @Valid @RequestBody RegisterRequest registerRequest
+             @RequestBody RegisterRequest registerRequest
     ) throws DefaultException {
         return ResponseEntity.ok(authService.register(registerRequest));
     }
