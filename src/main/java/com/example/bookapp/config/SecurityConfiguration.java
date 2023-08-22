@@ -11,8 +11,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import java.util.List;
-
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -22,11 +20,15 @@ public class SecurityConfiguration {
     private final AuthenticationProvider authenticationProvider;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
         httpSecurity
                 .authorizeHttpRequests((requests) -> requests.requestMatchers
-                                ("/api/v1/auth/**").permitAll()
+                                (
+                                        "/api/v1/auth/**",
+                                        "/api/v1/books",
+                                        "/api/v1/welcome"
+                                ).permitAll()
                         .anyRequest()
                         .authenticated())
                 .sessionManagement((session) -> session

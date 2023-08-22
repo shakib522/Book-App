@@ -2,6 +2,7 @@ package com.example.bookapp.auth.entity;
 
 import com.example.bookapp.auth.model.Role;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,7 +21,7 @@ import java.util.List;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long user_id;
     private String name;
     @Column(name = "email",unique = true)
     private String email;
@@ -29,6 +30,15 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @NotBlank(message = "District can not empty")
+    private String district;
+    @NotBlank(message = "Upozila can not empty")
+    private String upazila;
+    @NotBlank(message = "Area can not empty")
+    private String area;
+    @NotBlank(message = "Phone number can not empty")
+    private String phoneNumber;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

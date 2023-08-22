@@ -44,6 +44,7 @@ public class AuthServiceImpl implements AuthService{
         var jwtToken = jwtService.generateToken(user);
         return AuthResponse.builder()
                 .token(jwtToken)
+                .user_id(user.getUser_id())
                 .build();
     }
 
@@ -62,6 +63,7 @@ public class AuthServiceImpl implements AuthService{
         var jwtToken = jwtService.generateToken(user.get());
         return AuthResponse.builder()
                 .token(jwtToken)
+                .user_id(user.get().getUser_id())
                 .build();
     }
 }
