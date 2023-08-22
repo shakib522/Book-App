@@ -1,14 +1,15 @@
 package com.example.bookapp.error;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.http.HttpStatusCode;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ErrorMessage {
+@Builder
+public class DefaultMessage {
     private String status;
     private String message;
     private Integer statusCode;

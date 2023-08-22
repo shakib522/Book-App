@@ -14,8 +14,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class RestErrorResponse extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(DefaultException.class)
-    public ResponseEntity<ErrorMessage> defaultException(DefaultException exception) {
-        ErrorMessage message = new ErrorMessage(
+    public ResponseEntity<DefaultMessage> defaultException(DefaultException exception) {
+        DefaultMessage message = new DefaultMessage(
                 "Failed",
                 exception.getMessage(),
                 exception.getStatusCode()
@@ -29,7 +29,7 @@ public class RestErrorResponse extends ResponseEntityExceptionHandler {
             HttpHeaders headers,
             HttpStatusCode statusCode, WebRequest request
     ) {
-        ErrorMessage message = new ErrorMessage(
+        DefaultMessage message = new DefaultMessage(
                 "Failed",
                 ex.getMessage(),
                 statusCode.value()

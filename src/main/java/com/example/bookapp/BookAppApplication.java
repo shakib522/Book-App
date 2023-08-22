@@ -15,30 +15,6 @@ public class BookAppApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(BookAppApplication.class, args);
-//        try {
-//            ProcessBuilder processBuilder = new ProcessBuilder(
-//                    "python3",
-//                    "/media/shakib/Projects/Book App/src/main/java/com/example/bookapp/predict_test.py",
-//                    "predict","2"
-//
-//            );
-//            processBuilder.redirectErrorStream(true);
-//            Process process = processBuilder.start();
-//
-//            final BufferedReader reader = new BufferedReader(
-//                    new InputStreamReader(process.getInputStream()));
-//            String line;
-//            while ((line = reader.readLine()) != null) {
-//                System.out.println(line);
-//            }
-//            reader.close();
-//
-//            //System.out.println(result.toString());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
-
     }
 
 }
