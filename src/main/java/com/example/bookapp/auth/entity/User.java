@@ -30,7 +30,6 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
     @NotBlank(message = "District can not empty")
     private String district;
     @NotBlank(message = "Upozila can not empty")

@@ -25,10 +25,11 @@ public class SecurityConfiguration {
         httpSecurity
                 .authorizeHttpRequests((requests) -> requests.requestMatchers
                                 (
-                                        "/api/v1/auth/**",
-                                        "/api/v1/books",
+                                        "/api/v1/auth/register",
+                                        "/api/v1/auth/login",
                                         "/api/v1/welcome"
                                 ).permitAll()
+                        .requestMatchers("/api/v1/admin/category").hasAuthority("ADMIN")
                         .anyRequest()
                         .authenticated())
                 .sessionManagement((session) -> session

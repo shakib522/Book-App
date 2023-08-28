@@ -3,13 +3,14 @@ package com.example.bookapp.books.controller;
 
 import com.example.bookapp.books.entity.Books;
 import com.example.bookapp.auth.service.AuthService;
+import com.example.bookapp.books.entity.Category;
+import com.example.bookapp.books.model.BookRequest;
 import com.example.bookapp.books.service.BookService;
+import com.example.bookapp.error.DefaultException;
+import com.example.bookapp.error.DefaultMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,8 +30,20 @@ public class BookController {
         return bookService.getAllBooks();
     }
 
+    @PostMapping("/books/add-new-book")
+    public ResponseEntity<DefaultMessage> addBook(
+            @RequestBody BookRequest newBook
+    ){
+        return ResponseEntity.ok().body(bookService.addBook(newBook));
+    }
+
     @GetMapping("/authors/{name}")
     public ResponseEntity<List<String>> getAllAuthors(@PathVariable("name") String name){
         return ResponseEntity.ok().body(bookService.getAllAuthors(name));
+    }
+
+    @PostMapping("/admin/category")
+    public ResponseEntity<DefaultMessage> addCategory(@RequestBody Category category) throws DefaultException {
+        return ResponseEntity.ok().body(bookService.addNewCategory(category));
     }
 }

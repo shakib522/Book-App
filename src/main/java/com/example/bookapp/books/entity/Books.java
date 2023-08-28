@@ -1,11 +1,13 @@
 package com.example.bookapp.books.entity;
 
+import com.example.bookapp.author.entity.Authors;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.Length;
+import java.util.List;
 
 @Entity
 @Data
@@ -18,20 +20,27 @@ public class Books {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique = true)
-    private Integer book_id;
+    private Long book_id;
     @Column(name = "title")
-    private String Title;
+    private String title;
     @Column(length = Length.LONG32)
     private String description;
     private String image;
-    @Column(name = "preview_link",length = Length.LONG32)
-    private String previewLink;
     @Column(length = Length.LONG32)
     private String publisher;
-    @Column(name = "info_link",length = Length.LONG32)
-    private String infoLink;
-    private String categories;
-    @Column(name = "ratings_count",length = Length.LONG16,columnDefinition = "Double")
+    @Column(name = "ratings_count", length = Length.LONG16, columnDefinition = "Double")
     private Double ratingsCount;
     private Integer quantity;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "book_author",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id"))
+    private List<Authors> bookAuthors;
+
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 }
