@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +31,12 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public DefaultMessage addBook(BookRequest newBook) {
+    public DefaultMessage addBook(BookRequest newBook) throws DefaultException {
+
+        Optional<Category> category=categoryRepository.findById(newBook.getCategoryId());
+        if(category.isEmpty()){
+            throw new DefaultException("Category not found",404);
+        }
         Books books= Books.builder()
                 .title(newBook.getTitle())
                 .description(newBook.getDescription())
@@ -39,6 +45,7 @@ public class BookServiceImpl implements BookService {
                 .ratingsCount(newBook.getRatingsCount())
                 .quantity(newBook.getQuantity())
                 .bookAuthors(newBook.getBookAuthors())
+                .category(category.get())
                 .build();
 
         bookRepository.save(books);
@@ -59,5 +66,10 @@ public class BookServiceImpl implements BookService {
                 .status("Success")
                 .statusCode(200)
                 .build();
+    }
+
+    @Override
+    public List<Category> getAllCategory() {
+        return categoryRepository.findAllCategory();
     }
 }

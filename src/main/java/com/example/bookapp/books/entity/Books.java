@@ -40,7 +40,7 @@ public class Books {
     private List<Authors> bookAuthors;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
     private Category category;
 }

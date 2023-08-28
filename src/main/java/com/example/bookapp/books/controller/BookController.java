@@ -2,7 +2,6 @@ package com.example.bookapp.books.controller;
 
 
 import com.example.bookapp.books.entity.Books;
-import com.example.bookapp.auth.service.AuthService;
 import com.example.bookapp.books.entity.Category;
 import com.example.bookapp.books.model.BookRequest;
 import com.example.bookapp.books.service.BookService;
@@ -33,7 +32,7 @@ public class BookController {
     @PostMapping("/books/add-new-book")
     public ResponseEntity<DefaultMessage> addBook(
             @RequestBody BookRequest newBook
-    ){
+    ) throws DefaultException {
         return ResponseEntity.ok().body(bookService.addBook(newBook));
     }
 
@@ -45,5 +44,10 @@ public class BookController {
     @PostMapping("/admin/category")
     public ResponseEntity<DefaultMessage> addCategory(@RequestBody Category category) throws DefaultException {
         return ResponseEntity.ok().body(bookService.addNewCategory(category));
+    }
+
+    @GetMapping("/books/category")
+    public ResponseEntity<List<Category>> getAllCategory(){
+        return ResponseEntity.ok().body(bookService.getAllCategory());
     }
 }
