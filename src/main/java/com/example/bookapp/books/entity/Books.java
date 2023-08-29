@@ -1,6 +1,7 @@
 package com.example.bookapp.books.entity;
 
 import com.example.bookapp.author.entity.Authors;
+import com.example.bookapp.userBook.UserBook;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -43,4 +44,10 @@ public class Books {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "book")
+    private List<UserBook> userBooks;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "book")
+    private List<Ratings> ratings;
 }

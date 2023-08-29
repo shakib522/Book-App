@@ -19,6 +19,8 @@ import java.util.List;
 public class BookController {
     private final BookService bookService;
 
+
+
     @GetMapping("/welcome")
     public ResponseEntity<String> welcome(){
         return ResponseEntity.ok().body("Welcome to Bookmark");
@@ -50,4 +52,6 @@ public class BookController {
     public ResponseEntity<List<Category>> getAllCategory(){
         return ResponseEntity.ok().body(bookService.getAllCategory());
     }
+
+
 }

@@ -1,6 +1,8 @@
 package com.example.bookapp.auth.entity;
 
 import com.example.bookapp.auth.model.Role;
+import com.example.bookapp.books.entity.Ratings;
+import com.example.bookapp.userBook.UserBook;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -73,4 +75,10 @@ public class User implements UserDetails {
     public String getPassword() {
         return password;
     }
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<UserBook> userBooks;
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<Ratings> ratings;
 }

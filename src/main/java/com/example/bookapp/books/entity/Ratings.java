@@ -1,27 +1,24 @@
-package com.example.bookapp.userBook;
+package com.example.bookapp.books.entity;
 
 
 import com.example.bookapp.auth.entity.User;
-import com.example.bookapp.books.entity.Books;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.Length;
 
 @Entity
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user_book")
-public class UserBook {
-
+@Table(name = "ratings")
+public class Ratings {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long user_book_id;
+    private Long ratings_id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -31,9 +28,5 @@ public class UserBook {
     @JoinColumn(name = "book_id")
     private Books book;
 
-    @Column(length = Length.LONG16)
-    private String type;
-    @Column(length = Length.LONG16)
-    private String book_condition;
-    private Integer price;
+    private Integer rating;
 }
