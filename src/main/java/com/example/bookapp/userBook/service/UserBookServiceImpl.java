@@ -13,6 +13,8 @@ import com.example.bookapp.userBook.repository.UserBookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -46,5 +48,31 @@ public class UserBookServiceImpl implements UserBookService {
                 .build();
         userBookRepository.save(userBook);
         return new DefaultMessage("Success", "Book added to profile", 200);
+    }
+
+    @Override
+    public DefaultMessage deleteBookFromProfile(Long user_book_id) throws DefaultException {
+
+        Optional<UserBook> userBook = userBookRepository.findUserBookById(user_book_id);
+
+        if (userBook.isEmpty()) {
+            throw new DefaultException("Book not found in profile", 404);
+        }
+
+        userBookRepository.deleteById(user_book_id);
+
+        return DefaultMessage.builder()
+                .statusCode(200)
+                .status("Success")
+                .message("Book deleted from profile")
+                .build();
+    }
+
+    @Override
+    public List<UserBook> getAllBookFromProfile(Long userId) {
+
+        Optional<List<UserBook>> userBookList =userBookRepository.findAllBookOfUser(userId);
+        return userBookList.orElse(Collections.emptyList());
+
     }
 }

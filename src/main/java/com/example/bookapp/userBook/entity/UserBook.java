@@ -3,6 +3,7 @@ package com.example.bookapp.userBook.entity;
 
 import com.example.bookapp.auth.entity.User;
 import com.example.bookapp.books.entity.Books;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -25,10 +26,12 @@ public class UserBook {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long user_book_id;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id",nullable = false)
     private User user;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "book_id",nullable = false)
     private Books book;
