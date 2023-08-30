@@ -1,7 +1,8 @@
 package com.example.bookapp.books.entity;
 
 import com.example.bookapp.author.entity.Authors;
-import com.example.bookapp.userBook.UserBook;
+import com.example.bookapp.userBook.entity.UserBook;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,6 +34,7 @@ public class Books {
     private Double ratingsCount;
     private Integer quantity;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "book_author",
@@ -41,13 +43,16 @@ public class Books {
     private List<Authors> bookAuthors;
 
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "book")
     private List<UserBook> userBooks;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "book")
     private List<Ratings> ratings;
 }

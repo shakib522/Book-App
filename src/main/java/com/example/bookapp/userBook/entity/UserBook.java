@@ -1,9 +1,11 @@
-package com.example.bookapp.userBook;
+package com.example.bookapp.userBook.entity;
 
 
 import com.example.bookapp.auth.entity.User;
 import com.example.bookapp.books.entity.Books;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,16 +26,20 @@ public class UserBook {
     private Long user_book_id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id",nullable = false)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "book_id")
+    @JoinColumn(name = "book_id",nullable = false)
     private Books book;
 
+    @NotNull
     @Column(length = Length.LONG16)
     private String type;
+    @NotNull
     @Column(length = Length.LONG16)
+    @NotBlank(message = "Book condition can not empty")
     private String book_condition;
+    @NotNull
     private Integer price;
 }
