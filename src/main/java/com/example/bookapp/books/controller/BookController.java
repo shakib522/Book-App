@@ -4,10 +4,12 @@ package com.example.bookapp.books.controller;
 import com.example.bookapp.books.entity.Books;
 import com.example.bookapp.books.entity.Category;
 import com.example.bookapp.books.model.BookRequest;
+import com.example.bookapp.books.model.GetAllBookResponse;
 import com.example.bookapp.books.service.BookService;
 import com.example.bookapp.error.DefaultException;
 import com.example.bookapp.error.DefaultMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +28,11 @@ public class BookController {
     }
 
     @GetMapping("/books")
-    public List<Books> getAllBooks(){
-        return bookService.getAllBooks();
+    public GetAllBookResponse getAllBooks(
+            @RequestParam final Integer pageNumber,
+            @RequestParam final Integer pageSize
+    ){
+        return bookService.getAllBooks(PageRequest.of(pageNumber,pageSize));
     }
 
     @PostMapping("/books/add-new-book")

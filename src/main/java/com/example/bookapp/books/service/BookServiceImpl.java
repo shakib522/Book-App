@@ -3,11 +3,14 @@ package com.example.bookapp.books.service;
 import com.example.bookapp.books.entity.Books;
 import com.example.bookapp.books.entity.Category;
 import com.example.bookapp.books.model.BookRequest;
+import com.example.bookapp.books.model.GetAllBookResponse;
 import com.example.bookapp.books.repository.BookRepository;
 import com.example.bookapp.books.repository.CategoryRepository;
 import com.example.bookapp.error.DefaultException;
 import com.example.bookapp.error.DefaultMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,8 +24,15 @@ public class BookServiceImpl implements BookService {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public List<Books> getAllBooks() {
-        return bookRepository.findAll();
+    public GetAllBookResponse getAllBooks(PageRequest pageRequest) {
+        Page<Books> bookPages=bookRepository.getAllBooks(pageRequest);
+        return GetAllBookResponse
+                .builder()
+                .totalElements(bookPages.getTotalElements())
+                .booksResponseList(bookPages.getContent())
+                .currentPage(bookPages.getNumber())
+                .totalPages(bookPages.getTotalPages())
+                .build();
     }
 
     @Override

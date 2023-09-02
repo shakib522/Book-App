@@ -9,8 +9,11 @@ import com.example.bookapp.error.DefaultException;
 import com.example.bookapp.error.DefaultMessage;
 import com.example.bookapp.userBook.entity.UserBook;
 import com.example.bookapp.userBook.model.AddBookToProfileRequest;
+import com.example.bookapp.userBook.model.AllUserBookResponse;
 import com.example.bookapp.userBook.repository.UserBookRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -35,8 +38,8 @@ public class UserBookServiceImpl implements UserBookService {
         if (books.isEmpty()) {
             throw new DefaultException("Book not found", 404);
         }
-        Optional<UserBook> userBookCheck = userBookRepository.findDuplicateEntry(request.getBook_id(),request.getUser_id());
-        if(userBookCheck.isPresent()){
+        Optional<UserBook> userBookCheck = userBookRepository.findDuplicateEntry(request.getBook_id(), request.getUser_id());
+        if (userBookCheck.isPresent()) {
             throw new DefaultException("Book already added to profile", 409);
         }
         var userBook = UserBook.builder()
@@ -71,8 +74,42 @@ public class UserBookServiceImpl implements UserBookService {
     @Override
     public List<UserBook> getAllBookFromProfile(Long userId) {
 
-        Optional<List<UserBook>> userBookList =userBookRepository.findAllBookOfUser(userId);
+        Optional<List<UserBook>> userBookList = userBookRepository.findAllBookOfUser(userId);
         return userBookList.orElse(Collections.emptyList());
 
+    }
+
+    @Override
+    public DefaultMessage editBookFromProfile
+            (Long userBookId, AddBookToProfileRequest request) throws DefaultException {
+
+        Optional<UserBook> userBook = userBookRepository.findUserBookById(userBookId);
+
+        if (userBook.isEmpty()) {
+            throw new DefaultException("Book not found in profile", 404);
+        }
+
+        UserBook userBookFromDB = userBook.get();
+        userBookFromDB.setBook_condition(request.getBook_condition());
+        userBookFromDB.setPrice(request.getPrice());
+        userBookFromDB.setType(request.getType());
+        userBookRepository.save(userBookFromDB);
+
+        return DefaultMessage.builder()
+                .status("Success")
+                .statusCode(200)
+                .message("Book edited")
+                .build();
+    }
+
+    @Override
+    public AllUserBookResponse getAllBookFromAllProfile(PageRequest pageRequest) throws DefaultException {
+        Page<UserBook> userBookPage = userBookRepository.findAllUserBook(pageRequest);
+        return AllUserBookResponse.builder()
+                .userBookList(userBookPage.getContent())
+                .totalPages(userBookPage.getTotalPages())
+                .totalElements(userBookPage.getTotalElements())
+                .currentPage(userBookPage.getNumber())
+                .build();
     }
 }
