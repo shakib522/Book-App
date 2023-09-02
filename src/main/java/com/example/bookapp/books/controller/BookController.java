@@ -1,7 +1,6 @@
 package com.example.bookapp.books.controller;
 
 
-import com.example.bookapp.books.entity.Books;
 import com.example.bookapp.books.entity.Category;
 import com.example.bookapp.books.model.BookRequest;
 import com.example.bookapp.books.model.GetAllBookResponse;
@@ -57,5 +56,9 @@ public class BookController {
         return ResponseEntity.ok().body(bookService.getAllCategory());
     }
 
-
+    public ResponseEntity<?> searchBook(
+            @RequestParam final String title
+    ){
+        return null;
+    }
 }

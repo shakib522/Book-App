@@ -3,13 +3,12 @@ package com.example.bookapp.userBook.controller;
 
 import com.example.bookapp.error.DefaultException;
 import com.example.bookapp.error.DefaultMessage;
-import com.example.bookapp.userBook.entity.UserBook;
 import com.example.bookapp.userBook.model.AddBookToProfileRequest;
 import com.example.bookapp.userBook.model.AllUserBookResponse;
+import com.example.bookapp.userBook.model.FindUserBookFromProfileResponse;
 import com.example.bookapp.userBook.service.UserBookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,8 +27,8 @@ public class UserBookController {
     }
 
     @GetMapping("/userBook/{user_id}")
-    public ResponseEntity<List<UserBook>> getAllBookFromProfile(@PathVariable Long user_id) throws DefaultException {
-        return ResponseEntity.ok().body(userBookService.getAllBookFromProfile(user_id));
+    public ResponseEntity<List<FindUserBookFromProfileResponse>> getAllBookFromAProfile(@PathVariable Long user_id) throws DefaultException {
+        return ResponseEntity.ok().body(userBookService.getAllBookFromAProfile(user_id));
     }
 
 
@@ -43,7 +42,7 @@ public class UserBookController {
             @PathVariable Long user_book_id,
             @RequestBody AddBookToProfileRequest request
     ) throws DefaultException {
-        return ResponseEntity.ok().body(userBookService.editBookFromProfile(user_book_id,request));
+        return ResponseEntity.ok().body(userBookService.editBookFromProfile(user_book_id, request));
     }
 
     @GetMapping("/userBook")
@@ -51,7 +50,7 @@ public class UserBookController {
             @RequestParam final Integer pageNumber,
             @RequestParam final Integer pageSize
     ) throws DefaultException {
-        return ResponseEntity.ok().body(userBookService.getAllBookFromAllProfile(PageRequest.of(pageNumber,pageSize)));
+        return ResponseEntity.ok().body(userBookService.getAllBookFromAllProfile(PageRequest.of(pageNumber, pageSize)));
     }
 
 }

@@ -10,6 +10,7 @@ import com.example.bookapp.error.DefaultMessage;
 import com.example.bookapp.userBook.entity.UserBook;
 import com.example.bookapp.userBook.model.AddBookToProfileRequest;
 import com.example.bookapp.userBook.model.AllUserBookResponse;
+import com.example.bookapp.userBook.model.FindUserBookFromProfileResponse;
 import com.example.bookapp.userBook.repository.UserBookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -72,9 +73,9 @@ public class UserBookServiceImpl implements UserBookService {
     }
 
     @Override
-    public List<UserBook> getAllBookFromProfile(Long userId) {
+    public List<FindUserBookFromProfileResponse> getAllBookFromAProfile(Long userId) {
 
-        Optional<List<UserBook>> userBookList = userBookRepository.findAllBookOfUser(userId);
+        Optional<List<FindUserBookFromProfileResponse>> userBookList =userBookRepository.findAllBookOfAUser(userId);
         return userBookList.orElse(Collections.emptyList());
 
     }
@@ -104,7 +105,7 @@ public class UserBookServiceImpl implements UserBookService {
 
     @Override
     public AllUserBookResponse getAllBookFromAllProfile(PageRequest pageRequest) throws DefaultException {
-        Page<UserBook> userBookPage = userBookRepository.findAllUserBook(pageRequest);
+        Page<FindUserBookFromProfileResponse> userBookPage = userBookRepository.findAllUserBook(pageRequest);
         return AllUserBookResponse.builder()
                 .userBookList(userBookPage.getContent())
                 .totalPages(userBookPage.getTotalPages())

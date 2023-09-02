@@ -17,5 +17,5 @@ public class AllUserBookResponse {
     private Integer totalPages;
     private Long totalElements;
     private Integer currentPage;
-    private List<UserBook> userBookList;
+    private List<FindUserBookFromProfileResponse> userBookList;
 }
