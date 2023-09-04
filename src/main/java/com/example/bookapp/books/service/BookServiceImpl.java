@@ -136,4 +136,10 @@ public class BookServiceImpl implements BookService {
                 .status("Success")
                 .build();
     }
+
+    @Override
+    public List<Double> getTotalRatingsOfABook(Long bookId) {
+
+        return ratingsRepository.getRatingOfABook(bookId);
+    }
 }

@@ -6,6 +6,7 @@ import com.example.bookapp.books.entity.Category;
 import com.example.bookapp.books.model.BookRatingsRequest;
 import com.example.bookapp.books.model.BookRequest;
 import com.example.bookapp.books.model.GetAllBookResponse;
+import com.example.bookapp.books.model.GetTotalRatingsOfABook;
 import com.example.bookapp.books.service.BookService;
 import com.example.bookapp.error.DefaultException;
 import com.example.bookapp.error.DefaultMessage;
@@ -24,7 +25,7 @@ public class BookController {
 
 
     @GetMapping("/welcome")
-    public ResponseEntity<String> welcome(){
+    public ResponseEntity<String> welcome() {
         return ResponseEntity.ok().body("Welcome to Bookmark");
     }
 
@@ -32,8 +33,8 @@ public class BookController {
     public GetAllBookResponse getAllBooks(
             @RequestParam final Integer pageNumber,
             @RequestParam final Integer pageSize
-    ){
-        return bookService.getAllBooks(PageRequest.of(pageNumber,pageSize));
+    ) {
+        return bookService.getAllBooks(PageRequest.of(pageNumber, pageSize));
     }
 
     @PostMapping("/books/add-new-book")
@@ -44,7 +45,6 @@ public class BookController {
     }
 
 
-
     @PostMapping("/admin/category")
     public ResponseEntity<DefaultMessage> addCategory(@RequestBody Category category) throws DefaultException {
         return ResponseEntity.ok().body(bookService.addNewCategory(category));
@@ -53,19 +53,19 @@ public class BookController {
     @PostMapping("/admin/books")
     public ResponseEntity<DefaultMessage> addNewBook(
             @RequestBody BookRequest books
-    ){
+    ) {
         return ResponseEntity.ok().body(bookService.addNewBook(books));
     }
 
     @GetMapping("/books/category")
-    public ResponseEntity<List<Category>> getAllCategory(){
+    public ResponseEntity<List<Category>> getAllCategory() {
         return ResponseEntity.ok().body(bookService.getAllCategory());
     }
 
     @GetMapping("/books/search")
     public ResponseEntity<List<Books>> searchBook(
             @RequestParam final String title
-    ){
+    ) {
         return ResponseEntity.ok().body(bookService.searchBook(title));
     }
 
@@ -74,5 +74,20 @@ public class BookController {
             @RequestBody BookRatingsRequest bookRatingsRequest
     ) throws DefaultException {
         return ResponseEntity.ok().body(bookService.giveRatingToBook(bookRatingsRequest));
+    }
+
+    @GetMapping("/books/rating")
+    public ResponseEntity<GetTotalRatingsOfABook> getTotalRatingsOfABook(
+            @RequestParam final Long bookId
+    ) {
+        List<Double> ratings = bookService.getTotalRatingsOfABook(bookId);
+        Double totalRating = 0.0;
+        for (Double rating : ratings) {
+            totalRating += rating;
+        }
+        Double averageRating = totalRating / ratings.size();
+        return ResponseEntity.ok().body(GetTotalRatingsOfABook.builder()
+                .totalRatings(averageRating)
+                .build());
     }
 }

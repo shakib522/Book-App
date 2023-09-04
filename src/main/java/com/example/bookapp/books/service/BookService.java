@@ -19,4 +19,5 @@ public interface BookService {
     List<Books> searchBook(String title);
     DefaultMessage addNewBook(BookRequest bookRequest);
     DefaultMessage giveRatingToBook(BookRatingsRequest bookRatingsRequest) throws DefaultException;
+    List<Double> getTotalRatingsOfABook(Long bookId);
 }
