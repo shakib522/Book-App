@@ -3,6 +3,7 @@ package com.example.bookapp.books.controller;
 
 import com.example.bookapp.books.entity.Books;
 import com.example.bookapp.books.entity.Category;
+import com.example.bookapp.books.model.BookRatingsRequest;
 import com.example.bookapp.books.model.BookRequest;
 import com.example.bookapp.books.model.GetAllBookResponse;
 import com.example.bookapp.books.service.BookService;
@@ -66,5 +67,12 @@ public class BookController {
             @RequestParam final String title
     ){
         return ResponseEntity.ok().body(bookService.searchBook(title));
+    }
+
+    @PostMapping("/books/rating")
+    public ResponseEntity<DefaultMessage> giveRatingToBook(
+            @RequestBody BookRatingsRequest bookRatingsRequest
+    ) throws DefaultException {
+        return ResponseEntity.ok().body(bookService.giveRatingToBook(bookRatingsRequest));
     }
 }

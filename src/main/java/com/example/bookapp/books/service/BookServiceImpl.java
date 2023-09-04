@@ -1,11 +1,16 @@
 package com.example.bookapp.books.service;
 
+import com.example.bookapp.auth.entity.User;
+import com.example.bookapp.auth.repository.AuthenticationRepository;
 import com.example.bookapp.books.entity.Books;
 import com.example.bookapp.books.entity.Category;
+import com.example.bookapp.books.entity.Ratings;
+import com.example.bookapp.books.model.BookRatingsRequest;
 import com.example.bookapp.books.model.BookRequest;
 import com.example.bookapp.books.model.GetAllBookResponse;
 import com.example.bookapp.books.repository.BookRepository;
 import com.example.bookapp.books.repository.CategoryRepository;
+import com.example.bookapp.books.repository.RatingsRepository;
 import com.example.bookapp.error.DefaultException;
 import com.example.bookapp.error.DefaultMessage;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +27,8 @@ public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
     private final CategoryRepository categoryRepository;
+    private final RatingsRepository ratingsRepository;
+    private final AuthenticationRepository authenticationRepository;
 
     @Override
     public GetAllBookResponse getAllBooks(PageRequest pageRequest) {
@@ -101,6 +108,31 @@ public class BookServiceImpl implements BookService {
         return DefaultMessage.builder()
                 .statusCode(200)
                 .message("Book added successfully")
+                .status("Success")
+                .build();
+    }
+
+    @Override
+    public DefaultMessage giveRatingToBook(BookRatingsRequest bookRatingsRequest) throws DefaultException {
+        Optional<User> user = authenticationRepository.findUserById(bookRatingsRequest.getUser_id());
+
+        if (user.isEmpty()) {
+            throw new DefaultException("User not found", 404);
+        }
+
+        Optional<Books> books = bookRepository.findBookById(bookRatingsRequest.getBook_id());
+        if (books.isEmpty()) {
+            throw new DefaultException("Book not found", 404);
+        }
+        Ratings ratings = Ratings.builder()
+                .rating(bookRatingsRequest.getRating())
+                .user(user.get())
+                .book(books.get())
+                .build();
+        ratingsRepository.save(ratings);
+        return DefaultMessage.builder()
+                .statusCode(200)
+                .message("Rating added successfully")
                 .status("Success")
                 .build();
     }
