@@ -68,6 +68,7 @@ public class AuthServiceImpl implements AuthService {
         var jwtToken = jwtService.generateToken(user.get());
         return AuthResponse.builder()
                 .token(jwtToken)
+                .role(user.get().getRole().name())
                 .user_id(user.get().getUser_id())
                 .build();
     }
@@ -75,14 +76,12 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public DefaultMessage changePassword(PasswordChangeRequest request) throws DefaultException {
         Optional<User> user = repository.findByEmail(request.getEmail());
-        System.out.println("after user field line" + user.isPresent());
         if (user.isEmpty()) {
             throw new DefaultException("User not found with this email", HttpStatus.NOT_FOUND.value());
         }
         if (!passwordEncoder.matches(request.getOldPassword(), user.get().getPassword())) {
             throw new DefaultException("Password is incorrect", HttpStatus.BAD_REQUEST.value());
         }
-        System.out.println("before set password");
         user.get().setPassword(passwordEncoder.encode(request.getNewPassword()));
         repository.save(user.get());
         return DefaultMessage.builder()

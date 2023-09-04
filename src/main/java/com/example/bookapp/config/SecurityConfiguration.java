@@ -29,7 +29,7 @@ public class SecurityConfiguration {
                                         "/api/v1/auth/login",
                                         "/api/v1/welcome"
                                 ).permitAll()
-                        .requestMatchers("/api/v1/admin/category").hasAuthority("ADMIN")
+                        .requestMatchers("/api/v1/admin/**").hasAuthority("ADMIN")
                         .anyRequest()
                         .authenticated())
                 .sessionManagement((session) -> session

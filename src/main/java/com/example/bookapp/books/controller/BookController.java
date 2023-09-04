@@ -1,6 +1,7 @@
 package com.example.bookapp.books.controller;
 
 
+import com.example.bookapp.books.entity.Books;
 import com.example.bookapp.books.entity.Category;
 import com.example.bookapp.books.model.BookRequest;
 import com.example.bookapp.books.model.GetAllBookResponse;
@@ -35,20 +36,24 @@ public class BookController {
     }
 
     @PostMapping("/books/add-new-book")
-    public ResponseEntity<DefaultMessage> addBook(
+    public ResponseEntity<DefaultMessage> requestForBook(
             @RequestBody BookRequest newBook
     ) throws DefaultException {
         return ResponseEntity.ok().body(bookService.addBook(newBook));
     }
 
-    @GetMapping("/authors/{name}")
-    public ResponseEntity<List<String>> getAllAuthors(@PathVariable("name") String name){
-        return ResponseEntity.ok().body(bookService.getAllAuthors(name));
-    }
+
 
     @PostMapping("/admin/category")
     public ResponseEntity<DefaultMessage> addCategory(@RequestBody Category category) throws DefaultException {
         return ResponseEntity.ok().body(bookService.addNewCategory(category));
+    }
+
+    @PostMapping("/admin/books")
+    public ResponseEntity<DefaultMessage> addNewBook(
+            @RequestBody BookRequest books
+    ){
+        return ResponseEntity.ok().body(bookService.addNewBook(books));
     }
 
     @GetMapping("/books/category")
@@ -56,9 +61,10 @@ public class BookController {
         return ResponseEntity.ok().body(bookService.getAllCategory());
     }
 
-    public ResponseEntity<?> searchBook(
+    @GetMapping("/books/search")
+    public ResponseEntity<List<Books>> searchBook(
             @RequestParam final String title
     ){
-        return null;
+        return ResponseEntity.ok().body(bookService.searchBook(title));
     }
 }

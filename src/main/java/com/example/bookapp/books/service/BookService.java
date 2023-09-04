@@ -12,8 +12,10 @@ import java.util.List;
 
 public interface BookService {
     GetAllBookResponse getAllBooks(PageRequest pageRequest);
-    List<String> getAllAuthors(String name);
+
     DefaultMessage addBook(BookRequest newBook) throws DefaultException;
     DefaultMessage addNewCategory(Category category) throws DefaultException;
     List<Category> getAllCategory();
+    List<Books> searchBook(String title);
+    DefaultMessage addNewBook(BookRequest bookRequest);
 }

@@ -25,7 +25,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public GetAllBookResponse getAllBooks(PageRequest pageRequest) {
-        Page<Books> bookPages=bookRepository.getAllBooks(pageRequest);
+        Page<Books> bookPages = bookRepository.getAllBooks(pageRequest);
         return GetAllBookResponse
                 .builder()
                 .totalElements(bookPages.getTotalElements())
@@ -35,19 +35,15 @@ public class BookServiceImpl implements BookService {
                 .build();
     }
 
-    @Override
-    public List<String> getAllAuthors(String name) {
-        return bookRepository.findAllAuthors(name);
-    }
 
     @Override
     public DefaultMessage addBook(BookRequest newBook) throws DefaultException {
 
-        Optional<Category> category=categoryRepository.findById(newBook.getCategoryId());
-        if(category.isEmpty()){
-            throw new DefaultException("Category not found",404);
+        Optional<Category> category = categoryRepository.findById(newBook.getCategoryId());
+        if (category.isEmpty()) {
+            throw new DefaultException("Category not found", 404);
         }
-        Books books= Books.builder()
+        Books books = Books.builder()
                 .title(newBook.getTitle())
                 .description(newBook.getDescription())
                 .image(newBook.getImage())
@@ -66,8 +62,8 @@ public class BookServiceImpl implements BookService {
     public DefaultMessage addNewCategory(Category category) throws DefaultException {
 
         String categoryName = categoryRepository.findCategoryName(category.getCategory_name());
-        if(categoryName != null){
-            throw new DefaultException("Category already exists",409);
+        if (categoryName != null) {
+            throw new DefaultException("Category already exists", 409);
         }
         categoryRepository.save(category);
         return DefaultMessage
@@ -81,5 +77,31 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Category> getAllCategory() {
         return categoryRepository.findAllCategory();
+    }
+
+    @Override
+    public List<Books> searchBook(String title) {
+        return bookRepository.searchBook("%" + title + "%");
+    }
+
+    @Override
+    public DefaultMessage addNewBook(BookRequest bookRequest) {
+        Optional<Category> category = categoryRepository.findById(bookRequest.getCategoryId());
+        Books book = Books.builder()
+                .title(bookRequest.getTitle())
+                .description(bookRequest.getDescription())
+                .image(bookRequest.getImage())
+                .publisher(bookRequest.getPublisher())
+                .ratingsCount(bookRequest.getRatingsCount())
+                .quantity(bookRequest.getQuantity())
+                .bookAuthors(bookRequest.getBookAuthors())
+                .category(category.get())
+                .build();
+        bookRepository.save(book);
+        return DefaultMessage.builder()
+                .statusCode(200)
+                .message("Book added successfully")
+                .status("Success")
+                .build();
     }
 }

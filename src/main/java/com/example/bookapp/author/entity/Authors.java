@@ -1,6 +1,7 @@
 package com.example.bookapp.author.entity;
 
 import com.example.bookapp.books.entity.Books;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,6 +21,7 @@ public class Authors {
     private Long author_id;
     private String author_name;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "bookAuthors",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     List<Books> books;
 
