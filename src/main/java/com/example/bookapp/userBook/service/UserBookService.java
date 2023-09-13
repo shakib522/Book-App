@@ -3,6 +3,7 @@ package com.example.bookapp.userBook.service;
 import com.example.bookapp.auth.entity.User;
 import com.example.bookapp.error.DefaultException;
 import com.example.bookapp.error.DefaultMessage;
+import com.example.bookapp.userBook.entity.UserBook;
 import com.example.bookapp.userBook.model.AddBookToProfileRequest;
 import com.example.bookapp.userBook.model.AllUserBookResponse;
 import com.example.bookapp.userBook.model.FindUserBookFromProfileResponse;
@@ -22,4 +23,6 @@ public interface UserBookService {
     AllUserBookResponse getAllBookFromAllProfile(PageRequest pageRequest) throws DefaultException;
 
     User getUserInfo(Long userId) throws DefaultException;
+
+    List<FindUserBookFromProfileResponse> getAllUserBookByCategoryName(String categoryName) throws DefaultException;
 }

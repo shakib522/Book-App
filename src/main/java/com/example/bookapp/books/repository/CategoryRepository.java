@@ -16,4 +16,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     @Query(value = "SELECT * from bookApp.category where category_name=?1",nativeQuery = true)
     Optional<Category> findCategoryByName(String categoryName);
+
+    @Query(value = "SELECT category_id from bookApp.category where category_name=?1",nativeQuery = true)
+    Optional<Long> findCategoryIdByName(String categoryName);
 }

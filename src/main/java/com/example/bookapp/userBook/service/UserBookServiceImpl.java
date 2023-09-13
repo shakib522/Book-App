@@ -4,7 +4,9 @@ package com.example.bookapp.userBook.service;
 import com.example.bookapp.auth.entity.User;
 import com.example.bookapp.auth.repository.AuthenticationRepository;
 import com.example.bookapp.books.entity.Books;
+import com.example.bookapp.books.entity.Category;
 import com.example.bookapp.books.repository.BookRepository;
+import com.example.bookapp.books.repository.CategoryRepository;
 import com.example.bookapp.error.DefaultException;
 import com.example.bookapp.error.DefaultMessage;
 import com.example.bookapp.userBook.entity.UserBook;
@@ -27,6 +29,7 @@ public class UserBookServiceImpl implements UserBookService {
     private final UserBookRepository userBookRepository;
     private final AuthenticationRepository authRepository;
     private final BookRepository bookRepository;
+    private final CategoryRepository categoryRepository;
 
     @Override
     public DefaultMessage addBookToProfile(AddBookToProfileRequest request) throws DefaultException {
@@ -121,5 +124,14 @@ public class UserBookServiceImpl implements UserBookService {
             throw new DefaultException("User not found",404);
         }
         return user.get();
+    }
+
+    @Override
+    public List<FindUserBookFromProfileResponse> getAllUserBookByCategoryName(String categoryName) throws DefaultException {
+        Optional<Long> id=categoryRepository.findCategoryIdByName(categoryName);
+        if(id.isEmpty()){
+            throw new DefaultException("Category not found",404);
+        }
+        return userBookRepository.findAllUserBookByCategoryId(id.get());
     }
 }

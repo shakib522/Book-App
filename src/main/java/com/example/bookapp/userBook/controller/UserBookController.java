@@ -4,6 +4,7 @@ package com.example.bookapp.userBook.controller;
 import com.example.bookapp.auth.entity.User;
 import com.example.bookapp.error.DefaultException;
 import com.example.bookapp.error.DefaultMessage;
+import com.example.bookapp.userBook.entity.UserBook;
 import com.example.bookapp.userBook.model.AddBookToProfileRequest;
 import com.example.bookapp.userBook.model.AllUserBookResponse;
 import com.example.bookapp.userBook.model.FindUserBookFromProfileResponse;
@@ -60,4 +61,10 @@ public class UserBookController {
         return ResponseEntity.ok().body(userBookService.getUserInfo(user_id));
     }
 
+    @GetMapping("/userBook/category/{category_name}")
+    public ResponseEntity<List<FindUserBookFromProfileResponse>> getAllUserBookByCategoryName(
+            @PathVariable String category_name
+    ) throws DefaultException {
+        return ResponseEntity.ok().body(userBookService.getAllUserBookByCategoryName(category_name));
+    }
 }
