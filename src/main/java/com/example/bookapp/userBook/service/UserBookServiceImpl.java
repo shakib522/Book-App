@@ -75,7 +75,7 @@ public class UserBookServiceImpl implements UserBookService {
     @Override
     public List<FindUserBookFromProfileResponse> getAllBookFromAProfile(Long userId) {
 
-        Optional<List<FindUserBookFromProfileResponse>> userBookList =userBookRepository.findAllBookOfAUser(userId);
+        Optional<List<FindUserBookFromProfileResponse>> userBookList = userBookRepository.findAllBookOfAUser(userId);
         return userBookList.orElse(Collections.emptyList());
 
     }
@@ -112,5 +112,14 @@ public class UserBookServiceImpl implements UserBookService {
                 .totalElements(userBookPage.getTotalElements())
                 .currentPage(userBookPage.getNumber())
                 .build();
+    }
+
+    @Override
+    public User getUserInfo(Long userId) throws DefaultException {
+        Optional<User> user = authRepository.findUserById(userId);
+        if(user.isEmpty()){
+            throw new DefaultException("User not found",404);
+        }
+        return user.get();
     }
 }

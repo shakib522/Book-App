@@ -20,4 +20,8 @@ public interface BookService {
     DefaultMessage addNewBook(BookRequest bookRequest);
     DefaultMessage giveRatingToBook(BookRatingsRequest bookRatingsRequest) throws DefaultException;
     List<Double> getTotalRatingsOfABook(Long bookId);
+
+    DefaultMessage deleteCategory(String categoryName) throws DefaultException;
+
+    DefaultMessage editCategory(String categoryName,Category category) throws DefaultException;
 }

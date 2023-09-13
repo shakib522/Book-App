@@ -9,6 +9,6 @@ import java.util.Optional;
 public interface AuthenticationRepository extends JpaRepository<User,Long> {
     Optional<User> findByEmail(String email);
 
-    @Query(value="SELECT * FROM user u WHERE u.user_id = ?1",nativeQuery = true )
+    @Query(value="SELECT * FROM bookApp.user u WHERE u.user_id = ?1",nativeQuery = true )
     Optional<User> findUserById(Long Id);
 }

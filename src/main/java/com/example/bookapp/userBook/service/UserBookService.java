@@ -1,5 +1,6 @@
 package com.example.bookapp.userBook.service;
 
+import com.example.bookapp.auth.entity.User;
 import com.example.bookapp.error.DefaultException;
 import com.example.bookapp.error.DefaultMessage;
 import com.example.bookapp.userBook.model.AddBookToProfileRequest;
@@ -18,5 +19,7 @@ public interface UserBookService {
 
     DefaultMessage editBookFromProfile(Long userBookId, AddBookToProfileRequest request) throws DefaultException;
 
-     AllUserBookResponse getAllBookFromAllProfile(PageRequest pageRequest) throws DefaultException;
+    AllUserBookResponse getAllBookFromAllProfile(PageRequest pageRequest) throws DefaultException;
+
+    User getUserInfo(Long userId) throws DefaultException;
 }

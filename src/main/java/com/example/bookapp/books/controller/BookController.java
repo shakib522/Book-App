@@ -62,6 +62,22 @@ public class BookController {
         return ResponseEntity.ok().body(bookService.getAllCategory());
     }
 
+    @DeleteMapping("/admin/category")
+    public ResponseEntity<DefaultMessage> deleteCategory(
+            @RequestParam final String categoryName
+    ) throws DefaultException {
+        return ResponseEntity.ok().body(bookService.deleteCategory(categoryName));
+    }
+
+    @PutMapping("/admin/category")
+    public ResponseEntity<DefaultMessage> editCategory(
+            @RequestParam final String categoryName,
+            @RequestBody Category category
+    ) throws DefaultException {
+        return ResponseEntity.ok().body(bookService.editCategory(categoryName,category));
+    }
+
+
     @GetMapping("/books/search")
     public ResponseEntity<List<Books>> searchBook(
             @RequestParam final String title

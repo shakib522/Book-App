@@ -3,7 +3,7 @@ server:
 
 spring:
   profiles:
-    active: dev
+    active: prod
 
 ---
 spring:
@@ -24,7 +24,7 @@ spring:
       hibernate:
         format_sql: true
     database: mysql
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database-platform: org.hibernate.dialect.MySQLDialect
 
 management:
   endpoints:
@@ -54,5 +54,13 @@ spring:
       hibernate:
         format_sql: true
     database: mysql
-    database-platform: org.hibernate.dialect.MySQL8Dialect
-
+    database-platform: org.hibernate.dialect.MySQLDialect
+logging:
+  file:
+    path: /home/shakib/bookApp
+  level:
+    org.springframework.web: "error"
+    org.hibernate: "error"
+    com:
+      example:
+        bookapp: error

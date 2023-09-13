@@ -23,7 +23,7 @@ public class Books {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique = true)
     private Long book_id;
-    @Column(name = "title")
+    @Column(name = "title",unique = true)
     private String title;
     @Column(length = Length.LONG32)
     private String description;

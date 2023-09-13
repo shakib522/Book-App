@@ -3,6 +3,7 @@ package com.example.bookapp.auth.entity;
 import com.example.bookapp.auth.model.Role;
 import com.example.bookapp.books.entity.Ratings;
 import com.example.bookapp.userBook.entity.UserBook;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -76,9 +77,11 @@ public class User implements UserDetails {
         return password;
     }
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<UserBook> userBooks;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Ratings> ratings;
 }

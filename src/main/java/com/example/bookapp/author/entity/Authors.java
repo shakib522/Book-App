@@ -19,6 +19,7 @@ public class Authors {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long author_id;
+    @Column(unique = true)
     private String author_name;
 
     @JsonIgnore

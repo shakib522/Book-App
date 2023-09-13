@@ -142,4 +142,35 @@ public class BookServiceImpl implements BookService {
 
         return ratingsRepository.getRatingOfABook(bookId);
     }
+
+    @Override
+    public DefaultMessage deleteCategory(String categoryName) throws DefaultException {
+
+
+        Optional<Category> categoryOptional = categoryRepository.findCategoryByName(categoryName);
+        if(categoryOptional.isEmpty()){
+            throw new DefaultException("Category not found", 404);
+        }
+        categoryRepository.delete(categoryOptional.get());
+        return DefaultMessage.builder()
+                .message("Category deleted successfully")
+                .statusCode(200)
+                .status("Success")
+                .build();
+    }
+
+    @Override
+    public DefaultMessage editCategory(String categoryName,Category category) throws DefaultException {
+        Optional<Category> categoryOptional = categoryRepository.findCategoryByName(categoryName);
+        if(categoryOptional.isEmpty()){
+            throw new DefaultException("Category not found", 404);
+        }
+        categoryOptional.get().setCategory_name(category.getCategory_name());
+        categoryRepository.save(categoryOptional.get());
+        return DefaultMessage.builder()
+                .message("Category edited successfully")
+                .statusCode(200)
+                .status("Success")
+                .build();
+    }
 }

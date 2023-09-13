@@ -18,4 +18,9 @@ public class AuthorsServiceImpl implements AuthorsService{
     public List<Authors> searchAuthors(String name) {
         return authorsRepository.searchAuthors("%"+name+"%");
     }
+
+    @Override
+    public List<Authors> getAllAuthors() {
+        return authorsRepository.findAll();
+    }
 }

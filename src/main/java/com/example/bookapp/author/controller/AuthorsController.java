@@ -22,4 +22,10 @@ public class AuthorsController {
     public ResponseEntity<List<Authors>> searchAuthors(@PathVariable("name") String name){
         return ResponseEntity.ok().body(authorsService.searchAuthors(name));
     }
+
+    @GetMapping("/authors")
+    public ResponseEntity<List<Authors>> getAllAuthors(){
+        return ResponseEntity.ok().body(authorsService.getAllAuthors());
+    }
+
 }
