@@ -1,7 +1,9 @@
 package com.example.bookapp.userBook.repository;
 
+import com.example.bookapp.auth.entity.User;
 import com.example.bookapp.userBook.entity.UserBook;
 import com.example.bookapp.userBook.model.FindUserBookFromProfileResponse;
+import com.example.bookapp.userBook.model.GetUserBookDetailsResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,5 +31,8 @@ public interface UserBookRepository extends JpaRepository<UserBook,Long>{
 
     @Query(value="SELECT * FROM bookApp.user_book u join bookApp.books b on u.book_id=b.book_id where b.category_id=?1",nativeQuery = true )
     List<FindUserBookFromProfileResponse> findAllUserBookByCategoryId(Long categoryId);
+
+    @Query(value = "SELECT * FROM bookApp.user_book ub join bookApp.books b on ub.book_id=b.book_id join bookApp.user u on ub.user_id=u.user_id where ub.book_id=?1",nativeQuery = true)
+    List<GetUserBookDetailsResponse> findUserListOfABook(Long bookId);
 
 }

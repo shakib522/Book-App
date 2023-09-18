@@ -7,6 +7,7 @@ import com.example.bookapp.userBook.entity.UserBook;
 import com.example.bookapp.userBook.model.AddBookToProfileRequest;
 import com.example.bookapp.userBook.model.AllUserBookResponse;
 import com.example.bookapp.userBook.model.FindUserBookFromProfileResponse;
+import com.example.bookapp.userBook.model.GetUserBookDetailsResponse;
 import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
@@ -25,4 +26,6 @@ public interface UserBookService {
     User getUserInfo(Long userId) throws DefaultException;
 
     List<FindUserBookFromProfileResponse> getAllUserBookByCategoryName(String categoryName) throws DefaultException;
+
+    List<GetUserBookDetailsResponse> getUserListOfABook(Long bookId);
 }

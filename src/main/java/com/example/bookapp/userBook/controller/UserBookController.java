@@ -4,15 +4,16 @@ package com.example.bookapp.userBook.controller;
 import com.example.bookapp.auth.entity.User;
 import com.example.bookapp.error.DefaultException;
 import com.example.bookapp.error.DefaultMessage;
-import com.example.bookapp.userBook.entity.UserBook;
 import com.example.bookapp.userBook.model.AddBookToProfileRequest;
 import com.example.bookapp.userBook.model.AllUserBookResponse;
 import com.example.bookapp.userBook.model.FindUserBookFromProfileResponse;
+import com.example.bookapp.userBook.model.GetUserBookDetailsResponse;
 import com.example.bookapp.userBook.service.UserBookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -66,5 +67,12 @@ public class UserBookController {
             @PathVariable String category_name
     ) throws DefaultException {
         return ResponseEntity.ok().body(userBookService.getAllUserBookByCategoryName(category_name));
+    }
+
+    @GetMapping("/userBook/info")
+    public ResponseEntity<List<GetUserBookDetailsResponse>> getUserListOfABook(
+            @RequestParam final Long bookId
+    ){
+        return ResponseEntity.ok().body(userBookService.getUserListOfABook(bookId));
     }
 }

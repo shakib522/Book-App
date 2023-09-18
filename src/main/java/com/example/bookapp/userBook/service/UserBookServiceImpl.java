@@ -4,7 +4,6 @@ package com.example.bookapp.userBook.service;
 import com.example.bookapp.auth.entity.User;
 import com.example.bookapp.auth.repository.AuthenticationRepository;
 import com.example.bookapp.books.entity.Books;
-import com.example.bookapp.books.entity.Category;
 import com.example.bookapp.books.repository.BookRepository;
 import com.example.bookapp.books.repository.CategoryRepository;
 import com.example.bookapp.error.DefaultException;
@@ -13,6 +12,7 @@ import com.example.bookapp.userBook.entity.UserBook;
 import com.example.bookapp.userBook.model.AddBookToProfileRequest;
 import com.example.bookapp.userBook.model.AllUserBookResponse;
 import com.example.bookapp.userBook.model.FindUserBookFromProfileResponse;
+import com.example.bookapp.userBook.model.GetUserBookDetailsResponse;
 import com.example.bookapp.userBook.repository.UserBookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -133,5 +133,10 @@ public class UserBookServiceImpl implements UserBookService {
             throw new DefaultException("Category not found",404);
         }
         return userBookRepository.findAllUserBookByCategoryId(id.get());
+    }
+
+    @Override
+    public List<GetUserBookDetailsResponse> getUserListOfABook(Long bookId) {
+        return userBookRepository.findUserListOfABook(bookId);
     }
 }
