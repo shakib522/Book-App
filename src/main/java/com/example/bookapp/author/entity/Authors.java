@@ -16,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Authors {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long author_id;
@@ -23,7 +24,9 @@ public class Authors {
     private String author_name;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "bookAuthors",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = Books.class, mappedBy = "bookAuthors", fetch = FetchType.LAZY, cascade = {
+            CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH
+    })
     List<Books> books;
 
 }

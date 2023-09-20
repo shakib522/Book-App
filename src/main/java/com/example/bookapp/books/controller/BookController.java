@@ -41,7 +41,7 @@ public class BookController {
     public ResponseEntity<DefaultMessage> requestForBook(
             @RequestBody BookRequest newBook
     ) throws DefaultException {
-        return ResponseEntity.ok().body(bookService.addBook(newBook));
+        return ResponseEntity.ok().body(bookService.requestForBook(newBook));
     }
 
 
@@ -53,7 +53,7 @@ public class BookController {
     @PostMapping("/admin/books")
     public ResponseEntity<DefaultMessage> addNewBook(
             @RequestBody BookRequest books
-    ) {
+    ) throws DefaultException {
         return ResponseEntity.ok().body(bookService.addNewBook(books));
     }
 
@@ -105,5 +105,18 @@ public class BookController {
         return ResponseEntity.ok().body(GetTotalRatingsOfABook.builder()
                 .totalRatings(averageRating)
                 .build());
+    }
+
+    @GetMapping("/admin/books/pending")
+    public ResponseEntity<List<Books>> getPendingBooks(){
+        return ResponseEntity.ok().body(bookService.getPendingBooks());
+    }
+
+    @PutMapping("/admin/books/pending")
+    public ResponseEntity<DefaultMessage> editPendingBooks(
+            @RequestBody Books books,
+            @RequestParam final Long bookId
+    ) throws DefaultException {
+        return ResponseEntity.ok().body(bookService.editPendingBooks(books,bookId));
     }
 }

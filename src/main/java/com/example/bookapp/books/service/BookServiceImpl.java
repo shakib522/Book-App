@@ -2,6 +2,8 @@ package com.example.bookapp.books.service;
 
 import com.example.bookapp.auth.entity.User;
 import com.example.bookapp.auth.repository.AuthenticationRepository;
+import com.example.bookapp.author.entity.Authors;
+import com.example.bookapp.author.repository.AuthorsRepository;
 import com.example.bookapp.books.entity.Books;
 import com.example.bookapp.books.entity.Category;
 import com.example.bookapp.books.entity.Ratings;
@@ -18,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +31,7 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final CategoryRepository categoryRepository;
     private final RatingsRepository ratingsRepository;
+    private final AuthorsRepository authorsRepository;
     private final AuthenticationRepository authenticationRepository;
 
     @Override
@@ -44,7 +48,7 @@ public class BookServiceImpl implements BookService {
 
 
     @Override
-    public DefaultMessage addBook(BookRequest newBook) throws DefaultException {
+    public DefaultMessage requestForBook(BookRequest newBook) throws DefaultException {
 
         Optional<Category> category = categoryRepository.findById(newBook.getCategoryId());
         if (category.isEmpty()) {
@@ -57,12 +61,20 @@ public class BookServiceImpl implements BookService {
                 .publisher(newBook.getPublisher())
                 .ratingsCount(newBook.getRatingsCount())
                 .quantity(newBook.getQuantity())
-                .bookAuthors(newBook.getBookAuthors())
                 .category(category.get())
                 .build();
 
+        newBook.getBookAuthors().forEach(authors -> {
+            Optional<Authors> authorsOptional = authorsRepository.findAuthorByName(authors.getAuthor_name());
+            if (authorsOptional.isEmpty()) {
+                authorsRepository.save(authors);
+                books.addAuthor(authors);
+            } else {
+                books.addAuthor(authorsOptional.get());
+            }
+        });
         bookRepository.save(books);
-        return new DefaultMessage("Success", "Book added successfully", 200);
+        return new DefaultMessage("Success", "Book request send successfully", 200);
     }
 
     @Override
@@ -92,19 +104,33 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public DefaultMessage addNewBook(BookRequest bookRequest) {
+    public DefaultMessage addNewBook(BookRequest bookRequest) throws DefaultException {
+
         Optional<Category> category = categoryRepository.findById(bookRequest.getCategoryId());
-        Books book = Books.builder()
+        if (category.isEmpty()) {
+            throw new DefaultException("Category not found", 404);
+        }
+        Books books = Books.builder()
                 .title(bookRequest.getTitle())
                 .description(bookRequest.getDescription())
                 .image(bookRequest.getImage())
                 .publisher(bookRequest.getPublisher())
                 .ratingsCount(bookRequest.getRatingsCount())
                 .quantity(bookRequest.getQuantity())
-                .bookAuthors(bookRequest.getBookAuthors())
+                .approved(true)
                 .category(category.get())
                 .build();
-        bookRepository.save(book);
+
+        bookRequest.getBookAuthors().forEach(authors -> {
+            Optional<Authors> authorsOptional = authorsRepository.findAuthorByName(authors.getAuthor_name());
+            if (authorsOptional.isEmpty()) {
+                authorsRepository.save(authors);
+                books.addAuthor(authors);
+            } else {
+                books.addAuthor(authorsOptional.get());
+            }
+        });
+        bookRepository.save(books);
         return DefaultMessage.builder()
                 .statusCode(200)
                 .message("Book added successfully")
@@ -148,7 +174,7 @@ public class BookServiceImpl implements BookService {
 
 
         Optional<Category> categoryOptional = categoryRepository.findCategoryByName(categoryName);
-        if(categoryOptional.isEmpty()){
+        if (categoryOptional.isEmpty()) {
             throw new DefaultException("Category not found", 404);
         }
         categoryRepository.delete(categoryOptional.get());
@@ -160,9 +186,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public DefaultMessage editCategory(String categoryName,Category category) throws DefaultException {
+    public DefaultMessage editCategory(String categoryName, Category category) throws DefaultException {
         Optional<Category> categoryOptional = categoryRepository.findCategoryByName(categoryName);
-        if(categoryOptional.isEmpty()){
+        if (categoryOptional.isEmpty()) {
             throw new DefaultException("Category not found", 404);
         }
         categoryOptional.get().setCategory_name(category.getCategory_name());
@@ -171,6 +197,33 @@ public class BookServiceImpl implements BookService {
                 .message("Category edited successfully")
                 .statusCode(200)
                 .status("Success")
+                .build();
+    }
+
+    @Override
+    public List<Books> getPendingBooks() {
+        return bookRepository.getPendingBooks();
+    }
+
+    @Override
+    public DefaultMessage editPendingBooks(Books newBooks, Long bookId) throws DefaultException {
+        Optional<Books> books = bookRepository.findById(bookId);
+        if (books.isEmpty()) {
+            throw new DefaultException("Book not found", 404);
+        }
+        Books book = books.get();
+        book.setImage(newBooks.getImage());
+        book.setQuantity(newBooks.getQuantity());
+        book.setRatingsCount(newBooks.getRatingsCount());
+        book.setPublisher(newBooks.getPublisher());
+        book.setDescription(newBooks.getDescription());
+        book.setTitle(newBooks.getTitle());
+        book.setApproved(newBooks.isApproved());
+        bookRepository.save(book);
+        return DefaultMessage.builder()
+                .message("Book approved successfully")
+                .status("Success")
+                .statusCode(200)
                 .build();
     }
 }

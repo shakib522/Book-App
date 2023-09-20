@@ -9,7 +9,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.Length;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -21,7 +24,6 @@ public class Books {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(unique = true)
     private Long book_id;
     @Column(name = "title",unique = true)
     private String title;
@@ -33,15 +35,21 @@ public class Books {
     @Column(name = "ratings_count", length = Length.LONG16, columnDefinition = "Double")
     private Double ratingsCount;
     private Integer quantity;
+    @Column(name = "approved")
+    private boolean  approved=false;
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "book_author",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "author_id"))
+    @ManyToMany(targetEntity = Authors.class,fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
     private List<Authors> bookAuthors;
 
+    public void addAuthor(Authors author) {
+        if (bookAuthors == null) {
+            bookAuthors = new ArrayList<>();
+        }
+        if (!bookAuthors.contains(author)) {
+            bookAuthors.add(author);
+        }
+    }
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -55,4 +63,5 @@ public class Books {
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "book")
     private List<Ratings> ratings;
+
 }
