@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DefaultException extends Exception{
+public class DefaultException extends RuntimeException{
     private String message;
     private Integer statusCode;
 }
