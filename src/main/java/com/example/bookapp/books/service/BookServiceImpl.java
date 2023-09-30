@@ -149,6 +149,11 @@ public class BookServiceImpl implements BookService {
         if (books.isEmpty()) {
             throw new DefaultException("Book not found", 404);
         }
+
+        Optional<Ratings> ratingsOptional = ratingsRepository.findDuplicateEntry(bookRatingsRequest.getBook_id(), bookRatingsRequest.getUser_id());
+        if(ratingsOptional.isPresent()){
+            throw new DefaultException("You have already rated this book",409);
+        }
         Ratings ratings = Ratings.builder()
                 .rating(bookRatingsRequest.getRating())
                 .user(user.get())

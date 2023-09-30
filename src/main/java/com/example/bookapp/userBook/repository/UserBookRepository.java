@@ -1,6 +1,5 @@
 package com.example.bookapp.userBook.repository;
 
-import com.example.bookapp.auth.entity.User;
 import com.example.bookapp.userBook.entity.UserBook;
 import com.example.bookapp.userBook.model.FindUserBookFromProfileResponse;
 import com.example.bookapp.userBook.model.GetUserBookDetailsResponse;
