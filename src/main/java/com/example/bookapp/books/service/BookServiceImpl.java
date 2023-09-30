@@ -236,4 +236,14 @@ public class BookServiceImpl implements BookService {
         }
         return bookRepository.getAllBookByCategoryId(categoryId).get();
     }
+
+    @Override
+    public List<Authors> getAuthorsOfABook(Long bookId) throws DefaultException{
+        Optional<Books> books=bookRepository.findBookById(bookId);
+        if(books.isPresent()){
+            return books.get().getBookAuthors();
+        }else{
+            throw new DefaultException("Book not found",404);
+        }
+    }
 }

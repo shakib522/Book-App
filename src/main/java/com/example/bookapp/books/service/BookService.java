@@ -1,5 +1,6 @@
 package com.example.bookapp.books.service;
 
+import com.example.bookapp.author.entity.Authors;
 import com.example.bookapp.books.entity.Books;
 import com.example.bookapp.books.entity.Category;
 import com.example.bookapp.books.model.BookRatingsRequest;
@@ -26,4 +27,6 @@ public interface BookService {
     DefaultMessage editPendingBooks(Books newBooks,Long bookId) throws DefaultException;
 
     List<Books> getAllBookByCategoryId(Long categoryId) throws DefaultException;
+
+    List<Authors> getAuthorsOfABook(Long bookId) throws DefaultException;
 }

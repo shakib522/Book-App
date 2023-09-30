@@ -1,6 +1,7 @@
 package com.example.bookapp.books.controller;
 
 
+import com.example.bookapp.author.entity.Authors;
 import com.example.bookapp.books.entity.Books;
 import com.example.bookapp.books.entity.Category;
 import com.example.bookapp.books.model.BookRatingsRequest;
@@ -125,5 +126,12 @@ public class BookController {
             @PathVariable Long categoryId
     ) throws DefaultException {
         return ResponseEntity.ok().body(bookService.getAllBookByCategoryId(categoryId));
+    }
+
+    @GetMapping("/books/authors")
+    public ResponseEntity<List<Authors>> getAuthorsOfABook(
+            @RequestParam final Long bookId
+    ) throws DefaultException {
+        return ResponseEntity.ok().body(bookService.getAuthorsOfABook(bookId));
     }
 }
