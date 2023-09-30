@@ -9,10 +9,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.Length;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Data
@@ -38,7 +36,6 @@ public class Books {
     @Column(name = "approved")
     private boolean  approved=false;
 
-    @JsonIgnore
     @ManyToMany(targetEntity = Authors.class,fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
     private List<Authors> bookAuthors;
 

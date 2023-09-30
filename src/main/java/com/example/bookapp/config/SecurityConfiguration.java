@@ -32,7 +32,7 @@ public class SecurityConfiguration {
                                         "/api/v1/admin/category"
                                 ).permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/books").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/books/add-new-book").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/admin/books").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/books/category").permitAll()
                         .requestMatchers("/api/v1/admin/**").hasAuthority("ADMIN")
                         .anyRequest()

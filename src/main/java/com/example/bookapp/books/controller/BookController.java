@@ -119,4 +119,11 @@ public class BookController {
     ) throws DefaultException {
         return ResponseEntity.ok().body(bookService.editPendingBooks(books,bookId));
     }
+
+    @GetMapping("/books/category/{categoryId}")
+    public ResponseEntity<List<Books>> getAllBookByCategoryName(
+            @PathVariable Long categoryId
+    ) throws DefaultException {
+        return ResponseEntity.ok().body(bookService.getAllBookByCategoryId(categoryId));
+    }
 }

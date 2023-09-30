@@ -20,7 +20,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -225,5 +224,16 @@ public class BookServiceImpl implements BookService {
                 .status("Success")
                 .statusCode(200)
                 .build();
+    }
+
+    @Override
+    public List<Books> getAllBookByCategoryId(Long categoryId) throws DefaultException {
+        if(categoryRepository.findById(categoryId).isEmpty()){
+            throw new DefaultException("Category not found",404);
+        }
+        if (bookRepository.getAllBookByCategoryId(categoryId).isEmpty()){
+            throw new DefaultException("No books found",404);
+        }
+        return bookRepository.getAllBookByCategoryId(categoryId).get();
     }
 }

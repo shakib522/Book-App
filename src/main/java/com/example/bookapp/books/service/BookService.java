@@ -24,4 +24,6 @@ public interface BookService {
     DefaultMessage editCategory(String categoryName,Category category) throws DefaultException;
     List<Books> getPendingBooks();
     DefaultMessage editPendingBooks(Books newBooks,Long bookId) throws DefaultException;
+
+    List<Books> getAllBookByCategoryId(Long categoryId) throws DefaultException;
 }

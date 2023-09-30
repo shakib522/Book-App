@@ -18,7 +18,6 @@ public interface GetUserBookDetailsResponse {
     String getUpazila();
     String getArea();
     String getPhoneNumber();
-
     String getDescription();
 
     String getBook_author();
