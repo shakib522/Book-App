@@ -1,6 +1,15 @@
 server:
-  port: 8089
+  port: 8080
+
 spring:
+  profiles:
+    active: prod
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: shakib19
@@ -10,5 +19,48 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    database: mysql
     show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQLDialect
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+        exclude: "env,beans"
+
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: shakib19
+    url: jdbc:mysql://localhost:3306/bookApp
+    username: root
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQLDialect
+logging:
+  file:
+    path: /home/shakib/bookApp
+  level:
+    org.springframework.web: "error"
+    org.hibernate: "error"
+    com:
+      example:
+        bookapp: error
