@@ -24,7 +24,8 @@ public class WebConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(Arrays.asList("http://localhost:5173","http://146.190.160.22:80","http://146.190.160.22","http://146.190.160.22:81","http://146.190.160.22:1"));
+        config.setAllowedOrigins(Arrays.asList("http://localhost:5173","http://146.190.160.22:80","http://146.190.160.22",
+                "http://146.190.160.22:81","http://146.190.160.22:1","http://booksmark.me/"));
         config.setAllowedHeaders(Arrays.asList(
                 HttpHeaders.AUTHORIZATION,
                 HttpHeaders.CONTENT_TYPE,
