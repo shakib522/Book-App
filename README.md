@@ -33,3 +33,5 @@ A book exchange and resalling platform in which user can exchange their old book
 
 ## Website link
 https://booksmark.me/
+## Frontend Repository Link: 
+## AI repository link:
