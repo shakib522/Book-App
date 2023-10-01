@@ -28,7 +28,7 @@ A book exchange and resalling platform in which user can exchange their old book
 - Mysql
 - JWT
 - Deploy to cloud VPS server
-- Flask server for communicate the machine learning model to spring boot using rest api
+- Flask api for communicate the machine learning model to spring boot using rest api
 
 
 ## Website link
