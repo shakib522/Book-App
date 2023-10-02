@@ -35,4 +35,4 @@ A book exchange and resalling platform in which user can exchange their old book
 https://booksmark.me/
 ## Frontend Repository Link: https://github.com/mdhasnainali/BookMark.git
 ## AI repository link: https://github.com/mdhasnainali/Book-Recommendation-System.git
-## You Tube Video link: Coming soon
+## You Tube Video link: https://youtu.be/lvdsH1H0f84
