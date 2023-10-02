@@ -1,0 +1,882 @@
+{
+	"info": {
+		"_postman_id": "97a880be-13f0-4354-9f1a-4e8931356c09",
+		"name": "Bookmark Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20909027"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"shohag\",\n    \"email\": \"shohag@gmail.com\",\n    \"area\": \"Motihar\",\n    \"district\": \"Rajshai\",\n    \"upazila\": \"Rajshahi Sadar\",\n    \"phoneNumber\": \"01717649260\",\n    \"password\": \"12345678\",\n    \"confirmPassword\": \"12345678\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						},
+						"description": "by hitting this endpoint,you can get a token.save this token for authorization of all other endpoint.Send the token as a header of the other endpoint like this:\n\nBearer {token}"
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"shohag@gmail.com\",\n    \"password\":\"12345678\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzYWloYW1AZ21haWwuY29tIiwiaWF0IjoxNjkyNzI3MDI4LCJleHAiOjE2OTUzMTkwMjh9.kFwJ804Grx7SDBKpYNzCEM8qA8mLzGUi0dK6td54_uI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"saiham@gmail.com\",\n    \"oldPassword\":\"12345678\",\n    \"newPassword\":\"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/changePassword",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"changePassword"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "books",
+			"item": [
+				{
+					"name": "get all books",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFraWJAZ21haWwuY29tIiwiaWF0IjoxNjkzODc0NDM5LCJleHAiOjE2OTY0NjY0Mzl9.gJTVs-r2zGfPvZ-SxSgS5tHsGKrz6OtSi5Pxyfwniuo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/books?pageSize=3&pageNumber=0",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "pageSize",
+									"value": "3"
+								},
+								{
+									"key": "pageNumber",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search authors",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFraWJAZ21haWwuY29tIiwiaWF0IjoxNjkzMjQzNDQxLCJleHAiOjE2OTU4MzU0NDF9.ABqlY_CgfyVsYAJRWdpZgoB7GEbug0apjTstovzoVUQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/authors/d",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"authors",
+								"d"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user request  for new book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzYWloYW1AZ21haWwuY29tIiwiaWF0IjoxNjkzMTQzMzkyLCJleHAiOjE2OTU3MzUzOTJ9.buA_IAKEJmutyZn6JqpmW5BkqhxHmi_CmLBr9c4Kd-k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Biology first paper\",\n    \"description\": \"A biology book for HSC candidate\",\n    \"image\": \"https://ds.rokomari.store/rokomari110/ProductNew20190903/260X372/Biology_1st_part_Class_XI_XIIWhite_Print-Dr_Mohammod_Abul_Hasan-a0913-86302.jpg\",\n    \"publisher\": \"NCTB\",\n    \"ratingsCount\": 7.0,\n    \"quantity\": \"51\",\n    \"categoryId\":3,\n    \"bookAuthors\":[\n        {\n            \"author_name\":\"D. Abul Hassan\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/books/add-new-book",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"books",
+								"add-new-book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFraWJAZ21haWwuY29tIiwiaWF0IjoxNjk0NjA3MjQxLCJleHAiOjE2OTcxOTkyNDF9.04xmK_dmdiynZtzSDtTQzosQICagE9BxvZUP1UxEdlA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"category_name\":\"Academic\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/admin/category",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"admin",
+								"category"
+							]
+						},
+						"description": "This endpoint only for admin access."
+					},
+					"response": []
+				},
+				{
+					"name": "get all categories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFraWJAZ21haWwuY29tIiwiaWF0IjoxNjkzMjQzNDQxLCJleHAiOjE2OTU4MzU0NDF9.ABqlY_CgfyVsYAJRWdpZgoB7GEbug0apjTstovzoVUQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/books/category",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"books",
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaG9oYWdAZ21haWwuY29tIiwiaWF0IjoxNjkzNjYxMzEzLCJleHAiOjE2OTYyNTMzMTN9.v6ym9KO5QldBFQZv_19L-WiTI1YTfhB1KnjcH3cnsQU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/books/search?title=Chem",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"books",
+								"search"
+							],
+							"query": [
+								{
+									"key": "title",
+									"value": "Chem"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "admin add new book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFraWJAZ21haWwuY29tIiwiaWF0IjoxNjk1NDAxMDI3LCJleHAiOjE2OTc5OTMwMjd9.l3XZ8ao4STYdpNwyU_USgPoRybfRmWR956GFRAsIw2U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\n    {\n    \"title\": \"Physics Book\",\n    \"description\": \"A book for SSC candidate\",\n    \"image\": \"https://bdebooks.com/wp-content/uploads/2023/01/Class-9-10-Physics-228x296.jpg\",\n    \"publisher\": \"NCTB\",\n    \"ratingsCount\": 3.0,\n    \"quantity\": 3,\n    \"categoryId\":1,\n    \"bookAuthors\":[\n        {\n            \"author_name\":\"DR. Jafor Iqbal\"\n        },\n        {\n            \"author_name\":\"Dr. Ali Asgar\"\n        }\n    ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/admin/books",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"admin",
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "give ratings",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFraWJAZ21haWwuY29tIiwiaWF0IjoxNjkzODM3NDEwLCJleHAiOjE2OTY0Mjk0MTB9.LzyeUaZCHUaeOXtHZVhnTWf-ejZ00cv-NWK-OKCGH8M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"book_id\":3,\n    \"user_id\":1,\n    \"rating\":4.0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/books/rating",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"books",
+								"rating"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all ratings of a book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFraWJAZ21haWwuY29tIiwiaWF0IjoxNjkzODM3NDEwLCJleHAiOjE2OTY0Mjk0MTB9.LzyeUaZCHUaeOXtHZVhnTWf-ejZ00cv-NWK-OKCGH8M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/books/rating?bookId=3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"books",
+								"rating"
+							],
+							"query": [
+								{
+									"key": "bookId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all authors",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFraWJAZ21haWwuY29tIiwiaWF0IjoxNjk0NjA3MjQxLCJleHAiOjE2OTcxOTkyNDF9.04xmK_dmdiynZtzSDtTQzosQICagE9BxvZUP1UxEdlA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/authors",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"authors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFraWJAZ21haWwuY29tIiwiaWF0IjoxNjk0NjA3MjQxLCJleHAiOjE2OTcxOTkyNDF9.04xmK_dmdiynZtzSDtTQzosQICagE9BxvZUP1UxEdlA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/admin/category?categoryName=Academy",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"admin",
+								"category"
+							],
+							"query": [
+								{
+									"key": "categoryName",
+									"value": "Academy"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFraWJAZ21haWwuY29tIiwiaWF0IjoxNjk0NjA3MjQxLCJleHAiOjE2OTcxOTkyNDF9.04xmK_dmdiynZtzSDtTQzosQICagE9BxvZUP1UxEdlA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"category_name\":\"Sci-fi\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/admin/category?categoryName=Science Fiction",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"admin",
+								"category"
+							],
+							"query": [
+								{
+									"key": "categoryName",
+									"value": "Science Fiction"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get pending book for admin",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "admin edit book request of user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFraWJAZ21haWwuY29tIiwiaWF0IjoxNjk0NjA3MjQxLCJleHAiOjE2OTcxOTkyNDF9.04xmK_dmdiynZtzSDtTQzosQICagE9BxvZUP1UxEdlA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"title\": \"Biology first paper\",\n        \"description\": \"A biology book for HSC candidate\",\n        \"image\": \"https://ds.rokomari.store/rokomari110/ProductNew20190903/260X372/Biology_1st_part_Class_XI_XIIWhite_Print-Dr_Mohammod_Abul_Hasan-a0913-86302.jpg\",\n        \"publisher\": \"NCTB\",\n        \"ratingsCount\": 7.0,\n        \"quantity\": 51,\n        \"approved\": true\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/admin/books/pending?bookId=1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"admin",
+								"books",
+								"pending"
+							],
+							"query": [
+								{
+									"key": "bookId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all book by category name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/books/category/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"books",
+								"category",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get authors of a book",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "book recommandation",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Books",
+			"item": [
+				{
+					"name": "add book to profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaG9oYWdAZ21haWwuY29tIiwiaWF0IjoxNjkzNjYxMzEzLCJleHAiOjE2OTYyNTMzMTN9.v6ym9KO5QldBFQZv_19L-WiTI1YTfhB1KnjcH3cnsQU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\":102,\n    \"book_id\":52,\n    \"type\":\"Swap\",\n    \"book_condition\":\"Good\",\n    \"price\":340\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/userBook",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"userBook"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete book from profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFraWJAZ21haWwuY29tIiwiaWF0IjoxNjkzMzE3NDczLCJleHAiOjE2OTU5MDk0NzN9.8f6PTioag_3ptS8cZXsadPPdsbGNBc0RDdC_xHYiBKI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/userBook/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"userBook",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all book from a user profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFraWJAZ21haWwuY29tIiwiaWF0IjoxNjkzMzE3NDczLCJleHAiOjE2OTU5MDk0NzN9.8f6PTioag_3ptS8cZXsadPPdsbGNBc0RDdC_xHYiBKI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/userBook/102",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"userBook",
+								"102"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit book of profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFraWJAZ21haWwuY29tIiwiaWF0IjoxNjkzMzE3NDczLCJleHAiOjE2OTU5MDk0NzN9.8f6PTioag_3ptS8cZXsadPPdsbGNBc0RDdC_xHYiBKI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\":2,\n    \"book_id\":2,\n    \"type\":\"Sell\",\n    \"book_condition\":\"Good\",\n    \"price\":310\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/userBook/152",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"userBook",
+								"152"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all book from all user profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFraWJAZ21haWwuY29tIiwiaWF0IjoxNjkzMzE3NDczLCJleHAiOjE2OTU5MDk0NzN9.8f6PTioag_3ptS8cZXsadPPdsbGNBc0RDdC_xHYiBKI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/userBook?pageNumber=0&pageSize=10",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"userBook"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "0"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user details",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFraWJAZ21haWwuY29tIiwiaWF0IjoxNjk0NjA3MjQxLCJleHAiOjE2OTcxOTkyNDF9.04xmK_dmdiynZtzSDtTQzosQICagE9BxvZUP1UxEdlA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/user/102",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"102"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all user books by category name",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFraWJAZ21haWwuY29tIiwiaWF0IjoxNjk0NjA3MjQxLCJleHAiOjE2OTcxOTkyNDF9.04xmK_dmdiynZtzSDtTQzosQICagE9BxvZUP1UxEdlA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/userBook/category/Academic",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"userBook",
+								"category",
+								"Academic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user book details",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFraWJAZ21haWwuY29tIiwiaWF0IjoxNjk0NjA3MjQxLCJleHAiOjE2OTcxOTkyNDF9.04xmK_dmdiynZtzSDtTQzosQICagE9BxvZUP1UxEdlA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/userBook/info?bookId=2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"userBook",
+								"info"
+							],
+							"query": [
+								{
+									"key": "bookId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
