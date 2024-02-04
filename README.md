@@ -1,7 +1,6 @@
 # Book-App
 
-A book exchange and resalling platform in which user can exchange their old book or sell
-
+A book exchange and resale platform in which users can exchange their old books or sell
 
 ## Screenshots
 
